@@ -1,6 +1,7 @@
 import React from "react";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   return (
@@ -11,10 +12,17 @@ const Login = () => {
         <form>
           <TextField id="standard-basic" label="Email" variant="standard" />
           <TextField id="standard-basic" label="Password" variant="standard" />
-
-          <Button variant="outlined">Sign up</Button>
+          {/* need to add authentication with firebase */}
+          <Link to="/" className="linkRouter">
+            <Button variant="outlined">Sign in</Button>
+          </Link>
         </form>
-        <p>Need an account? Register</p>
+        <p>
+          Need an account?{" "}
+          <Link to="/register" className="linkRouter">
+            <span>Register</span>
+          </Link>
+        </p>
       </div>
     </div>
   );

@@ -1,3 +1,19 @@
+@mixin mobile {
+    @media screen and (max-width: 480px) {
+      @content;
+    }
+  }
+  @mixin tablet {
+    @media screen and (max-width: 768px) {
+      @content;
+    }
+  }
+  @mixin laptop {
+    @media screen and (max-width: 1200px) {
+      @content;
+    }
+  }
+
 .home{
     background-color: var(--main-color);
     height: 100vh;
@@ -6,9 +22,11 @@
     justify-content: center;
     .container{
         border:1px solid white;
-        border-radius: 10px;
-        width: 65%;
-        height: 80%;
+        // border-radius: 10px;
+        // width: 65%;
+        // height: 80%;
+        width: 100%;
+        height: 100%;
         display: flex;
         overflow: hidden;
         .sidebar{
@@ -27,6 +45,9 @@
                 
             .logo{
                 font-weight: bold;
+                @include tablet{
+                    display: none;
+                }
             }
             .user{
                 display: flex;
@@ -89,7 +110,112 @@
             }
         }
         .chat{
-            flex:2;
+            flex:2.8;
+            background-color: var(--light-color);
+            .chatInfo{
+                height: 50px;
+                display: flex;
+                align-items:center;
+                justify-content: space-between;
+                background-color: var(--darker-color);
+                padding: 10px;
+                color: lightgrey;
+                svg{
+                    margin:8px;
+                    cursor: pointer;
+                    transform: scale(1.15);
+                }
+            }
+            .messageList{
+                background-color:var(--light-color);
+                padding:10px;
+                height: calc(100% - 150px);
+                overflow-y: auto;
+                .emojiContainer{
+                    float: right;
+                    position: relative;
+                    top: 120px;
+                }
+                .messageBubble{
+                    display: flex;
+                    gap: 20px;
+                    .messageInfo{    
+                        display: flex;
+                        flex-direction: column;
+                        color:grey;
+                        margin-bottom: 20px;
+                        img{
+                        width:40px;
+                        height: 40px;
+                        border-radius: 50%;
+                        object-fit: cover;
+                        }
+                        span{
+                            font-size: 15px;
+                            color:black;
+                        }
+                    }
+                    .messageContent{
+                        max-width: 80%;
+                        display: flex;
+                        flex-direction: column;
+                        gap:10px;
+                        .textContent{
+                            background-color: white;
+                            padding:10px 20px;
+                            border-radius: 0px 10px 10px 10px;
+                            max-width: max-content;
+                        }
+                        img{
+                            width: 50%;
+                        }
+                    }
+                
+                 &.owner{
+                    flex-direction: row-reverse;
+                    .messageContent{
+                        align-items: flex-end;
+                    }
+                    .textContent{
+                        background-color: rgb(247, 234, 233);
+                        border-radius: 10px 0px 10px 10px;
+                    }
+                 }
+                }
+            }
+            .input{
+                background-color: white;
+                height: 38px;
+                padding: 6px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                /* position: relative; */
+                /* top: -7px; */
+                width: 95%;
+                margin: 0 auto;
+                border-radius: 10px;
+                input{
+                    width: 100%;
+                    border:none;
+                    outline:none;
+                    color: grey;
+                    font-size:16px;
+                    &::placeholder{
+                        color: lightgrey;
+                    }
+                }
+                .send{
+                    display: flex;
+                    align-items: center;
+                    gap:10px;
+                    cursor:pointer;
+                    svg{
+                         transform: scale(0.98);
+                         cursor:pointer;
+                    }
+                }
+            }
         }
     }
 }

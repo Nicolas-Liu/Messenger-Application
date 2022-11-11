@@ -1,5 +1,5 @@
 import React from "react";
-import Chats from "./Chats";
+import SideBarChats from "./SideBarChats";
 import Navbar from "./Navbar";
 import Search from "./Search";
 
@@ -8,7 +8,7 @@ const Sidebar = () => {
     <div className="sidebar">
       <Navbar />
       <Search />
-      <Chats />
+      <SideBarChats />
     </div>
   );
 };

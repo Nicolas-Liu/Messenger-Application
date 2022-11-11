@@ -1,19 +1,21 @@
-import React from 'react';
+import React from "react";
 import Button from "@mui/material/Button";
 import picture from "../assets/profile-pic.jpg";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   return (
     <div className="navbar">
-        <span className="logo">Logo</span>
-        <div className="user">
-            <img src={picture} alt="" />
-            <span>Name</span>
-            <Button variant="outlined">Logout</Button>
-        </div>
-
+      <span className="logo">Logo</span>
+      <div className="user">
+        <img src={picture} alt="" />
+        <span>Name</span>
+        <Link to="/login" className="linkRouter">
+          <Button variant="outlined">Logout</Button>
+        </Link>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;
