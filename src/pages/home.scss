@@ -1,0 +1,95 @@
+.home{
+    background-color: var(--main-color);
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .container{
+        border:1px solid white;
+        border-radius: 10px;
+        width: 65%;
+        height: 80%;
+        display: flex;
+        overflow: hidden;
+        .sidebar{
+            flex:1;
+            border-right: 1px solid white;
+            background-color: var(--apple-color);
+            
+            .navbar{
+                display: flex;
+                align-items: center;
+                background-color: var(--darker-color);
+                height: 50px;
+                padding:10px;
+                justify-content: space-between;
+                color: brown;
+                
+            .logo{
+                font-weight: bold;
+            }
+            .user{
+                display: flex;
+                gap: 10px;
+                align-items: center;
+                img{
+                    background-color: antiquewhite;
+                    height:24px;
+                    width:24px;
+                    border-radius: 50%;
+                    object-fit: cover;
+                }
+            }
+            button{
+                transform: scale(0.85);
+                color: white;
+            }
+            }
+            .search{
+                border-bottom: 1px solid white;
+            .searchForm{
+                // padding:10px;
+                input{
+                    background-color: transparent;
+                border: none;
+                color:white;
+                outline: none;
+                width: 100%;
+                overflow: hidden;
+            &::placeholder{
+                color:lightgray;
+            }
+                }
+            }
+            }
+        }
+        .userChat{
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color:white;
+            cursor:pointer;
+            transition: 0.5s all;
+            &:hover{
+                background-color: var(--darker-color);
+            }
+            img{
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+                object-fit: cover;
+            }
+            .userChatInfo{
+                span{
+                    font-size: 18px;
+                    font-weight: 500;
+                    p{ font-size: 14px; color:antiquewhite}
+                }
+            }
+        }
+        .chat{
+            flex:2;
+        }
+    }
+}
