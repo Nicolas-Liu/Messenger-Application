@@ -121,16 +121,20 @@
                 padding: 10px;
                 color: lightgrey;
                 svg{
-                    margin:8px;
+                    margin:10px;
                     cursor: pointer;
-                    transform: scale(1.15);
-                }
+                    transform: scale(1.22);
+                }         
             }
             .messageList{
                 background-color:var(--light-color);
                 padding:10px;
                 height: calc(100% - 150px);
                 overflow-y: auto;
+                .name{
+                    color:black;
+                    font-weight: 500;
+                }
                 .emojiContainer{
                     float: right;
                     position: relative;
@@ -160,6 +164,7 @@
                         display: flex;
                         flex-direction: column;
                         gap:10px;
+                        margin-top: 25px;
                         .textContent{
                             background-color: white;
                             padding:10px 20px;
@@ -190,11 +195,12 @@
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
-                /* position: relative; */
-                /* top: -7px; */
                 width: 95%;
                 margin: 0 auto;
                 border-radius: 10px;
+                box-shadow: -2px 5px 5px 0px rgb(0 0 0 / 75%);
+                -webkit-box-shadow: -2px 3px 3px 0px rgb(0 0 0 / 75%);
+                -moz-box-shadow: -2px 5px 5px 0px rgba(0,0,0,0.75);
                 input{
                     width: 100%;
                     border:none;
