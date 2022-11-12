@@ -4,6 +4,7 @@ const Message = () => {
   return (
     <div className="messageBubble owner">
       <div className="messageInfo">
+        <div className="name">Nicolas</div>
         <img src={profilePic} alt="" />
         <span>{Date().slice(0,10)}</span>
       </div>
