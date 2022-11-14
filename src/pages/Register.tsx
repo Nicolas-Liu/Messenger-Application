@@ -7,12 +7,49 @@ import Stack from "@mui/material/Stack";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import Alert from "@mui/material/Alert";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth, storage } from "../firebase";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 const Register = () => {
+  //TODO: add pop up for err state.
+  const [error, setError] = useState<boolean>(false);
   const [open, setOpen] = useState(false);
-  const handleClick = () => {
-    setOpen(true);
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    console.log("target", e.target[0].value);
+    const displayName = e.target[0].value;
+    const email = e.target[1].value;
+    const password = e.target[2].value;
+    const file = e.target[3].files[0];
+
+    try {
+      const res = await createUserWithEmailAndPassword(auth, email, password);
+
+      const storageRef = ref(storage, displayName);
+
+      const uploadTask = uploadBytesResumable(storageRef, file);
+
+      setOpen(true);
+    } catch (err) {
+      setError(true);
+      alert("err");
+    }
+    // createUserWithEmailAndPassword(auth, email, password)
+    // .then((userCredential) => {
+    //   // Signed in
+    //   const user = userCredential.user;
+    //   console.log('user', user)
+    //   // ...
+    // })
+    // .catch((error) => {
+    //   const errorCode = error.code;
+    //   const errorMessage = error.message;
+    //   // ..
+    // });
   };
+
   const handleClose = (
     event?: React.SyntheticEvent | Event,
     reason?: string
@@ -35,7 +72,7 @@ const Register = () => {
       <div className="formWrapper">
         <span className="title">Connect with your loved ones</span>
         <span>Register</span>
-        <form>
+        <form onSubmit={handleSubmit}>
           <TextField id="standard-basic" label="Name" variant="standard" />
           <TextField id="standard-basic" label="Email" variant="standard" />
           <TextField id="standard-basic" label="Password" variant="standard" />
@@ -57,7 +94,7 @@ const Register = () => {
             />
             <span>Add an avatar</span>
           </label>
-          <Button variant="outlined" onClick={handleClick}>
+          <Button variant="outlined" type="submit">
             Sign up
           </Button>
         </form>
