@@ -1,8 +1,28 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
+import { doc, onSnapshot } from "firebase/firestore";
+import { AuthContext } from "../context/AuthContext";
+import { db } from "../firebase";
 
 const SideBarChats = () => {
   const [isClicked, setIsClicked] = useState<boolean>(false);
+  const [chats, setChats] = useState<any>([]);
+
+  const { currentUser }: any = useContext(AuthContext);
+
+  useEffect(() => {
+    const getChats = () => {
+      const unsub = onSnapshot(doc(db, "userChats", currentUser.uid), (doc) => {
+        setChats(doc.data());
+      });
+
+      return () => {
+        unsub();
+      };
+    };
+
+    currentUser.uid && getChats();
+  }, [currentUser.uid]);
 
   const selectConversation = () => {
     setIsClicked(true);
@@ -10,18 +30,18 @@ const SideBarChats = () => {
 
   return (
     <div className="chats" onClick={selectConversation}>
-      <div className="userChat">
-        <img
-          src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8cHJvZmlsZXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=1000&q=60"
-          alt=""
-        />
-        <div className="userChatInfo">
-          <span>Jane</span>
-          <div className="previousMessage">oh Hi</div>
-        </div>
-        <div className="chats-time">Time</div>
-      </div>
-      {/* <CloseIcon/> */}
+      {/* {Object.entries(chats)
+        ?.sort((a, b) => b[1].date - a[1].date)
+        .map((chat) => (
+          <div className="userChat" key={chat[0]}>
+            <img src={chat[1].userInfo.photoURL} alt="" />
+            <div className="userChatInfo">
+              <span>{chat[1].userInfo.displayName}</span>
+              <div className="previousMessage">{chat[1].lastMessage?.text}</div>
+            </div>
+            <div className="chats-time">Time</div>
+          </div>
+        ))} */}
     </div>
   );
 };

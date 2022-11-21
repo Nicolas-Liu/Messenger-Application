@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
 import PersonIcon from "@mui/icons-material/Person";
 import NotificationsIcon from "@mui/icons-material/Notifications";
@@ -12,12 +12,16 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Skeleton from "@mui/material/Skeleton";
 import Stack from "@mui/material/Stack";
+import { signOut } from "firebase/auth";
+import { auth } from "../firebase";
+import { AuthContext } from "../context/AuthContext";
 
 const Chat = () => {
   const [showPicker, setShowPicker] = useState<boolean>(false);
-
+  const { currentUser }: any = useContext(AuthContext);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -25,56 +29,74 @@ const Chat = () => {
     setAnchorEl(null);
   };
   return (
-    <div className="chat">
-      <div className="chatInfo">
-        <span>Conversation</span>
-        <div className="chatIcons">
-          <Tooltip title="Notifications">
-            <NotificationsIcon />
-          </Tooltip>
-          <Tooltip title="New conversation">
-            <AddCommentIcon />
-          </Tooltip>
-          <Tooltip title="Account " onClick={handleClick}>
-            <PersonIcon />
-          </Tooltip>
-          <Menu
-            id="demo-positioned-menu"
-            aria-labelledby="demo-positioned-button"
-            anchorEl={anchorEl}
-            open={open}
-            onClose={handleClose}
-            anchorOrigin={{
-              vertical: "top",
-              horizontal: "left",
-            }}
-            transformOrigin={{
-              vertical: "top",
-              horizontal: "left",
-            }}
-            style={{ top: "40px" }}
-          >
-            {/* <MenuItem onClick={handleClose}>Profile</MenuItem>
-            <MenuItem onClick={handleClose}>My account</MenuItem>
-            <MenuItem onClick={handleClose}>Logout</MenuItem> */}
-            <Stack spacing={1}>
-              {/* For variant="text", adjust the height via font-size */}
-              <Skeleton variant="text"/>
+    <>
+      {currentUser && 
+       <div className="chat">
+       <div className="chatInfo">
+         <span>Conversation</span>
+         <div className="chatIcons">
+           <Tooltip title="Notifications">
+             <NotificationsIcon />
+           </Tooltip>
+           <Tooltip title="New conversation">
+             <AddCommentIcon />
+           </Tooltip>
+           <Tooltip title="Account " onClick={handleClick}>
+             <PersonIcon />
+           </Tooltip>
+           <Menu
+             id="demo-positioned-menu"
+             aria-labelledby="demo-positioned-button"
+             anchorEl={anchorEl}
+             open={open}
+             onClose={handleClose}
+             anchorOrigin={{
+               vertical: "top",
+               horizontal: "left",
+             }}
+             transformOrigin={{
+               vertical: "top",
+               horizontal: "left",
+             }}
+             style={{ top: "40px" }}
+           >
+             {/* <MenuItem onClick={handleClose}>Profile</MenuItem>
+           <MenuItem onClick={handleClose}>My account</MenuItem>
+           <MenuItem onClick={handleClose}>Logout</MenuItem> */}
+             <Stack spacing={1}>
+               {/* For variant="text", adjust the height via font-size */}
+               <div className="userInfo-name">{currentUser.displayName!}</div>
 
-              {/* For other variants, adjust the size with `width` and `height` */}
-              <Skeleton variant="circular" width={40} height={40}  onClick={handleClose}/>
-              <Skeleton variant="rectangular" width={210} height={60}  onClick={handleClose}/>
-              <Skeleton variant="rounded" width={210} height={60}  onClick={handleClose}/>
-            </Stack>
-          </Menu>
-          <Link to="/login" className="linkRouter">
-            <LogoutIcon />
-          </Link>
-        </div>
-      </div>
-      <MessageList showPicker={showPicker} />
-      <Input showPicker={showPicker} setShowPicker={setShowPicker} />
-    </div>
+               {/* For other variants, adjust the size with `width` and `height` */}
+               <img
+                 className="userInfo-img"
+                 src={currentUser.photoURL!}
+                 alt=""
+               />
+               <div className="date-creation">
+                 Date joined:{" "}
+                 {currentUser?.metadata?.creationTime!.slice(4, -12)}
+               </div>
+             </Stack>
+           </Menu>
+           <Link
+             to="/login"
+             className="linkRouter"
+             onClick={() => signOut(auth)}
+           >
+             <LogoutIcon />
+           </Link>
+           {/* <div className="signout" onClick={()=>signOut(auth)}>
+         <LogoutIcon />
+         </div> */}
+         </div>
+       </div>
+       <MessageList showPicker={showPicker} />
+       <Input showPicker={showPicker} setShowPicker={setShowPicker} />
+     </div>}
+
+     
+    </>
   );
 };
 

@@ -7,12 +7,15 @@ import Stack from "@mui/material/Stack";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import Alert from "@mui/material/Alert";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth, storage } from "../firebase";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { auth, db, storage } from "../firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { doc, setDoc } from "firebase/firestore"; 
+import  {useNavigate}  from "react-router-dom";
 
 const Register = () => {
   //TODO: add pop up for err state.
+  const navigate = useNavigate();
   const [error, setError] = useState<boolean>(false);
   const [open, setOpen] = useState(false);
 
@@ -25,29 +28,44 @@ const Register = () => {
     const file = e.target[3].files[0];
 
     try {
+      //Create user
       const res = await createUserWithEmailAndPassword(auth, email, password);
 
-      const storageRef = ref(storage, displayName);
+      //Create a unique image name
+      const date = new Date().getTime();
+      const storageRef = ref(storage, `${displayName + date}`);
 
-      const uploadTask = uploadBytesResumable(storageRef, file);
+      await uploadBytesResumable(storageRef, file).then(() => {
+        getDownloadURL(storageRef).then(async (downloadURL) => {
+          try {
+            //Update profile
+            await updateProfile(res.user, {
+              displayName,
+              photoURL: downloadURL,
+            });
+            //create user on firestore
+            await setDoc(doc(db, "users", res.user.uid), {
+              uid: res.user.uid,
+              displayName,
+              email,
+              photoURL: downloadURL,
+            });
 
-      setOpen(true);
+            //create empty user chats on firestore
+            await setDoc(doc(db, "userChats", res.user.uid), {});
+            console.log('redirect')
+            navigate("/");
+          } catch (err) {
+            console.log(err);
+            setError(true);
+            // setLoading(false);
+          }
+        });
+      });
     } catch (err) {
       setError(true);
-      alert("err");
+      // setLoading(false);
     }
-    // createUserWithEmailAndPassword(auth, email, password)
-    // .then((userCredential) => {
-    //   // Signed in
-    //   const user = userCredential.user;
-    //   console.log('user', user)
-    //   // ...
-    // })
-    // .catch((error) => {
-    //   const errorCode = error.code;
-    //   const errorMessage = error.message;
-    //   // ..
-    // });
   };
 
   const handleClose = (
@@ -97,6 +115,7 @@ const Register = () => {
           <Button variant="outlined" type="submit">
             Sign up
           </Button>
+          {error && <span>Something went wrong</span>}
         </form>
         <p>
           Got an account?
