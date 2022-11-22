@@ -5,13 +5,12 @@ import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
 
 import Snackbar from "@mui/material/Snackbar";
-import MuiAlert, { AlertProps } from "@mui/material/Alert";
 import Alert from "@mui/material/Alert";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth, db, storage } from "../firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { doc, setDoc } from "firebase/firestore"; 
-import  {useNavigate}  from "react-router-dom";
+import { doc, setDoc } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   //TODO: add pop up for err state.
@@ -53,7 +52,7 @@ const Register = () => {
 
             //create empty user chats on firestore
             await setDoc(doc(db, "userChats", res.user.uid), {});
-            console.log('redirect')
+            console.log("redirect");
             navigate("/");
           } catch (err) {
             console.log(err);
@@ -64,6 +63,9 @@ const Register = () => {
       });
     } catch (err) {
       setError(true);
+      setTimeout(() => {
+        setError(false);
+      }, 4500)
       // setLoading(false);
     }
   };
@@ -81,15 +83,20 @@ const Register = () => {
 
   return (
     <div className="formContainer">
+
       <Snackbar open={open} autoHideDuration={4500} onClose={handleClose}>
         <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
           Success. Thank you!
         </Alert>
       </Snackbar>
+      <div className="error-alert">
+      {error && <Alert severity="error">Something went wrong</Alert>}
+      </div>
+     
 
       <div className="formWrapper">
-        <span className="title">Connect with your loved ones</span>
-        <span>Register</span>
+        <span className="title">Connect with your friends</span>
+        <span className="subtitle">Register</span>
         <form onSubmit={handleSubmit}>
           <TextField id="standard-basic" label="Name" variant="standard" />
           <TextField id="standard-basic" label="Email" variant="standard" />
@@ -115,7 +122,6 @@ const Register = () => {
           <Button variant="outlined" type="submit">
             Sign up
           </Button>
-          {error && <span>Something went wrong</span>}
         </form>
         <p>
           Got an account?

@@ -11,6 +11,11 @@
     display:flex;
     align-items: center;
     justify-content: center;
+    .error-alert{  
+      position: absolute;
+      left: 0;
+      bottom: 1px;
+    }
     .formWrapper{
         background-color:white;
         padding:20px 60px;
@@ -30,6 +35,10 @@
             color: var(--apple-color);
             font-weight: 500;
             font-size: 20px;
+        }
+        .subtitle{
+          font-size: 1.2em;
+          font-weight: 500;
         }
         form{
             display: flex;
@@ -89,6 +98,12 @@
 
 .date-creation{
     margin: 8px 4px !important;
+}
+
+.chats-time{
+  font-size:0.9em;
+  position: relative;
+    top: -13px;
 }
 
 /* ===== Scrollbar CSS ===== */
