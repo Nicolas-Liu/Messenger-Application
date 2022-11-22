@@ -1,7 +1,7 @@
 # Chat Application
 
 Tech stack:
-React, TypeScript, SCSS, Firebase.
+React, TypeScript, MUI, SCSS, Firebase.
 
 ## Preview: 
 https://user-images.githubusercontent.com/94934469/203408340-0b027c99-35b8-4f30-99e5-720b134f0815.mov
