@@ -3,6 +3,10 @@
 Tech stack:
 React, TypeScript, Firebase.
 
+
+https://user-images.githubusercontent.com/94934469/203408340-0b027c99-35b8-4f30-99e5-720b134f0815.mov
+
+
 ## Available Scripts
 
 In the project directory, you can run:
