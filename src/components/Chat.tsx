@@ -15,6 +15,7 @@ import Stack from "@mui/material/Stack";
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase";
 import { AuthContext } from "../context/AuthContext";
+import { ChatContext } from "../context/ChatContext";
 
 const Chat = () => {
   const [showPicker, setShowPicker] = useState<boolean>(false);
@@ -22,25 +23,28 @@ const Chat = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
+  const {data}:any = useContext(ChatContext);
+
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
   };
+  console.log('data', data)
   return (
     <>
       {currentUser && 
        <div className="chat">
        <div className="chatInfo">
-         <span>Conversation</span>
+         <span>@{data.user.displayName}</span>
          <div className="chatIcons">
            <Tooltip title="Notifications">
              <NotificationsIcon />
            </Tooltip>
-           <Tooltip title="New conversation">
+           {/* <Tooltip title="New conversation">
              <AddCommentIcon />
-           </Tooltip>
+           </Tooltip> */}
            <Tooltip title="Account " onClick={handleClick}>
              <PersonIcon />
            </Tooltip>

@@ -60,6 +60,10 @@
                     border-radius: 50%;
                     object-fit: cover;
                 }
+                span{
+                    font-size: large;
+                    color: white;
+                }
             }
             button{
                 transform: scale(0.85);
@@ -91,9 +95,13 @@
             gap: 10px;
             color:white;
             cursor:pointer;
+            justify-content: space-between;
             transition: 0.5s all;
             &:hover{
                 background-color: var(--darker-color);
+            }
+            .sidebar-container{
+                display: flex;
             }
             img{
                 width: 50px;
@@ -102,12 +110,19 @@
                 object-fit: cover;
             }
             .userChatInfo{
+                margin: 0 13px;
+                .previousMessage{
+                    color: #f2dfdf;
+                }
                 span{
                     font-size: 18px;
                     font-weight: 500;
                     p{ font-size: 14px; color:antiquewhite}
                 }
             }
+        }
+        .activeChat{
+            background-color: var(--darker-color) !important;
         }
         .chat{
             flex:2.8;
@@ -121,9 +136,14 @@
                 padding: 10px;
                 color: lightgrey;
                 svg{
+                    color: white;
                     margin:10px;
                     cursor: pointer;
                     transform: scale(1.22);
+                    position: relative;
+                    &:hover{
+                        top: -1px;
+                    }
                 }         
             }
             .messageList{
@@ -142,21 +162,33 @@
                 }
                 .messageBubble{
                     display: flex;
-                    gap: 20px;
                     .messageInfo{    
                         display: flex;
                         flex-direction: column;
                         color:grey;
-                        margin-bottom: 20px;
+                        margin-bottom: 30px;
+                        .name{
+                            text-align: right;
+                        }
+                        .other-author{
+                            color: black;
+                            font-weight: 500;
+                        }
+                        .other-avatar{
+                            margin-left: 0;
+                        }
                         img{
                         width:40px;
                         height: 40px;
                         border-radius: 50%;
                         object-fit: cover;
+                        margin: 6px 0;
+                        margin-left: 65%;
                         }
                         span{
-                            font-size: 15px;
+                            font-size: 14px;
                             color:black;
+                            margin-top: 5px;
                         }
                     }
                     .messageContent{
@@ -164,8 +196,14 @@
                         display: flex;
                         flex-direction: column;
                         gap:10px;
-                        margin-top: 25px;
+                        margin-top: 28px;
                         .textContent{
+                            background-color: #f5e3d3;
+                            padding:10px 20px;
+                            border-radius: 0px 10px 10px 10px;
+                            max-width: max-content;
+                        }
+                        .other-textContent{
                             background-color: white;
                             padding:10px 20px;
                             border-radius: 0px 10px 10px 10px;
@@ -175,7 +213,16 @@
                             width: 50%;
                         }
                     }
-                
+                .other{
+                    flex-direction: row;
+                    text-align:right;
+                    .messageInfo{
+                        .name{
+                            text-align:right
+                        }
+                    }
+                    
+                }
                  &.owner{
                     flex-direction: row-reverse;
                     .messageContent{
