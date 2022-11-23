@@ -7,11 +7,15 @@ React, TypeScript, MUI, SCSS, Firebase.
 https://user-images.githubusercontent.com/94934469/203408340-0b027c99-35b8-4f30-99e5-720b134f0815.mov
 
 
-## Available Scripts
+## About:
+
+Application contains firebase authentication, firestore database and basic chat features (creating conversations, search users, sending, receiving messages...).
+
+## How to run
 
 In the project directory, you can run:
 
-### `npm start`
+### `npm start`:
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
