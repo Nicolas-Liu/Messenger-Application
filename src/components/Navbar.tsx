@@ -7,12 +7,16 @@ const Navbar = () => {
   const {currentUser}:any = useContext(AuthContext);
 
   return (
+    <>
+    {currentUser && 
     <div className="navbar">
       <div className="user">
         <img src={currentUser.photoURL} alt="" />
         <span>{currentUser.displayName}</span>
       </div>
     </div>
+    }
+    </>
   );
 };
 

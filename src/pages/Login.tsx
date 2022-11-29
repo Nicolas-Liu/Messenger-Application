@@ -22,13 +22,10 @@ const Login = () => {
     e.preventDefault();
     const email = e.target[0].value;
     const password = e.target[1].value;
-    console.log("clicked");
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      console.log("login success");
-      navigate("/");
+      navigate("/chat");
     } catch (err) {
-      console.log("login error:", err);
       setError(true);
       setTimeout(() => {
         setError(false);
@@ -55,9 +52,8 @@ const Login = () => {
         <span className="title">Connect with your friends</span>
         <span className="subtitle">Login</span>
         <form onSubmit={handleSubmit}>
-          {/* TODO: password input dots */}
-          <TextField id="standard-basic" label="Email" variant="standard" />
-          <TextField id="standard-basic" label="Password" type={showPassword ? "text" : "password"} variant="standard" 
+          <TextField label="Email" variant="standard" />
+          <TextField label="Password" type={showPassword ? "text" : "password"} variant="standard" 
            InputProps={{ 
             endAdornment: (
               <InputAdornment position="end">

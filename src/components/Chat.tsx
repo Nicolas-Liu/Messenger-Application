@@ -31,7 +31,7 @@ const Chat = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  console.log('data', data)
+
   return (
     <>
       {currentUser && 

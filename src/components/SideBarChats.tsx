@@ -38,17 +38,17 @@ const SideBarChats = () => {
     return new Date(timestamp * 1000);
   };
 
-  console.log("activeChat", activeChat);
   return (
     <div className="chats">
       {Object.entries(chats)
         ?.sort((a: any, b: any) => b[1].date - a[1].date)
-        .map((chat: any) => (
-          <div
+        .map((chat: any, index:any) => (
+          
+            <div
             // className={isClicked ? "userChat activeChat": "userChat"}
             className={"userChat"}
             ref={conversationSelectorHtmlRef}
-            key={chat[0]}
+            key={index}
             onClick={() => handleSelect(chat[1].userInfo)}
           >
             <div className="sidebar-container">
@@ -66,6 +66,8 @@ const SideBarChats = () => {
                 .slice(4, -36)}
             </div>
           </div>
+          
+          
         ))}
     </div>
   );

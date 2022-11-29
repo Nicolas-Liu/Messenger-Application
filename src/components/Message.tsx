@@ -11,7 +11,6 @@ const Message = ({message}:any) => {
   useEffect(() => {
     ref.current?.scrollIntoView({ behavior: "smooth" });
   }, [message]);
-  console.log('message', message)
 
   const convertDate = (nanoseconds: any, seconds: any) => {
     const timestamp: any = nanoseconds / 1e9 + seconds;

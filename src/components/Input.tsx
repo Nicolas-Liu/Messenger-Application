@@ -32,33 +32,29 @@ const Input = ({showPicker, setShowPicker}: IInput) => {
 
   const {currentUser}:any = useContext(AuthContext);
   const {data}:any = useContext(ChatContext);
- console.log('data1', data)
+
   const handleSend = async () => {
     if (img) {
       const storageRef = ref(storage, uuid());
 
       const uploadTask = uploadBytesResumable(storageRef, img);
-      console.log('data1', data)
-      uploadTask.on(
-        (err) => {
-          //TODO:Handle Error
-        },
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
-            await updateDoc(doc(db, "chats", data.chatId), {
-              messages: arrayUnion({
-                id: uuid(),
-                text,
-                senderId: currentUser.uid,
-                date: Timestamp.now(),
-                img: downloadURL,
-              }),
-            });
+
+      try{
+        getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+          await updateDoc(doc(db, "chats", data.chatId), {
+            messages: arrayUnion({
+              id: uuid(),
+              text,
+              senderId: currentUser.uid,
+              date: Timestamp.now(),
+              img: downloadURL,
+            }),
           });
-        }
-      );
+        });
+      }catch(err){
+        console.log('err',err)
+      }
     } else {
-      console.log('data', data)
       await updateDoc(doc(db, "chats", data?.chatId), {
         messages: arrayUnion({
           id: uuid(),
@@ -89,10 +85,7 @@ const Input = ({showPicker, setShowPicker}: IInput) => {
 
   const handleKeyPress = (e: any) => {
     console.log('pressed before')
-    if(e.keyCode == 13){
-      console.log('pressed')
-      handleSend()
-    }
+    e.code === "Enter" && handleSend();
   }
 
   return (
