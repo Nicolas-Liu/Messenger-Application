@@ -11,6 +11,10 @@ https://user-images.githubusercontent.com/94934469/203408340-0b027c99-35b8-4f30-
 
 Application contains firebase authentication, firestore database and basic chat features (creating conversations, search users, sending, receiving messages...).
 
+## Test it out:
+
+https://chatnicolasliutech.netlify.app/
+
 ## How to run
 
 In the project directory, you can run:
